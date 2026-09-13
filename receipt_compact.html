@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 16mm; }
+  body { font-family: "Courier New", monospace; color: #222222; font-size: 12px; }
+  .center { text-align: center; }
+  .shop-name { font-size: 17px; font-weight: bold; letter-spacing: 1px; }
+  .shop-contact { font-size: 10px; color: #555555; margin-top: 2px; }
+  .dashed { border-top: 1px dashed #999999; margin: 10px 0; }
+  .meta-table { width: 100%; font-size: 11px; margin-bottom: 8px; }
+  .items-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 11px; }
+  .items-table th { text-align: left; padding: 4px 2px; border-bottom: 1px dashed #999999; font-weight: bold; }
+  .items-table td { padding: 4px 2px; }
+  .totals-table { width: 100%; font-size: 12px; margin-top: 6px; }
+  .totals-table td { padding: 2px 0; }
+  .grand-row td { font-weight: bold; font-size: 14px; border-top: 1px dashed #999999; padding-top: 6px; }
+  .notes { margin-top: 16px; font-size: 10px; color: #666666; text-align: center; }
+  .footer { text-align: center; margin-top: 20px; font-size: 11px; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+  <div class="center">
+    <div class="shop-name">{{ shop_name }}</div>
+    <div class="shop-contact">{{ shop_contact }}</div>
+  </div>
+  <div class="dashed"></div>
+
+  <table class="meta-table">
+    <tr><td>Invoice #</td><td style="text-align:right;">{{ invoice_number }}</td></tr>
+    <tr><td>Date</td><td style="text-align:right;">{{ today }}</td></tr>
+    <tr><td>Client</td><td style="text-align:right;">{{ client_name }}</td></tr>
+  </table>
+  <div class="dashed"></div>
+
+  <table class="items-table">
+    <tr><th>Item</th><th style="text-align:center;">Qty</th><th style="text-align:right;">Amount</th></tr>
+    {% for item in items %}
+    <tr>
+      <td>{{ item.description }}</td>
+      <td style="text-align:center;">{{ item.qty }}</td>
+      <td style="text-align:right;">{{ currency }} {{ "%.2f"|format(item.qty|float * item.unit_price|float) }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <table class="totals-table">
+    <tr><td>Subtotal</td><td style="text-align:right;">{{ currency }} {{ "%.2f"|format(subtotal) }}</td></tr>
+    {% if tax_percent and tax_percent|float > 0 %}
+    <tr><td>Tax ({{ tax_percent }}%)</td><td style="text-align:right;">{{ currency }} {{ "%.2f"|format(tax_amount) }}</td></tr>
+    {% endif %}
+    <tr class="grand-row"><td>TOTAL</td><td style="text-align:right;">{{ currency }} {{ "%.2f"|format(total) }}</td></tr>
+  </table>
+
+  {% if notes %}<div class="notes">{{ notes }}</div>{% endif %}
+  <div class="dashed"></div>
+  <div class="footer center">THANK YOU</div>
+</body>
+</html>

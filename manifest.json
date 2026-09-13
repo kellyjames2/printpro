@@ -2,6 +2,8 @@
   "templates": [
     { "id": "classic_green", "file": "classic_green.html", "version": 2 },
     { "id": "bold_gold", "file": "bold_gold.html", "version": 2 },
-    { "id": "minimal_slate", "file": "minimal_slate.html", "version": 2 }
+    { "id": "minimal_slate", "file": "minimal_slate.html", "version": 2 },
+    { "id": "ocean_blue", "file": "ocean_blue.html", "version": 1 },
+    { "id": "receipt_compact", "file": "receipt_compact.html", "version": 1 }
   ]
 }
