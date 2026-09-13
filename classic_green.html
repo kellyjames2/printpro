@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 22mm 18mm; }
+  body { font-family: Helvetica, Arial, sans-serif; color: #1a1d24; font-size: 13px; }
+  .header-table { width: 100%; border-bottom: 3px solid #2f6f4f; padding-bottom: 14px; margin-bottom: 22px; }
+  .shop-name { font-size: 22px; font-weight: bold; color: #2f6f4f; }
+  .shop-contact { color: #555555; font-size: 12px; margin-top: 4px; }
+  .invoice-tag { text-align: right; }
+  .invoice-tag .big { font-size: 26px; letter-spacing: 2px; color: #1a1d24; font-weight: bold; }
+  .invoice-tag .num { color: #2f6f4f; font-weight: bold; margin-top: 4px; }
+  .meta-table { width: 100%; margin-bottom: 22px; }
+  .meta-label { font-size: 11px; text-transform: uppercase; color: #888888; }
+  .meta-value { font-size: 14px; font-weight: bold; }
+  .items-table { width: 100%; border-collapse: collapse; margin-bottom: 22px; }
+  .items-table th { background: #2f6f4f; color: #ffffff; text-align: left; padding: 8px 10px; font-size: 11px; text-transform: uppercase; }
+  .items-table td { padding: 8px 10px; border-bottom: 1px solid #eeeeee; }
+  .totals-table { width: 260px; margin-left: auto; }
+  .totals-table td { padding: 5px 0; }
+  .totals-table .grand-label, .totals-table .grand-value { font-weight: bold; font-size: 15px; border-top: 2px solid #2f6f4f; padding-top: 8px; color: #2f6f4f; }
+  .notes { margin-top: 26px; font-size: 12px; color: #666666; border-top: 1px solid #eeeeee; padding-top: 12px; }
+  .footer { text-align: center; margin-top: 34px; color: #aaaaaa; font-size: 11px; }
+</style>
+</head>
+<body><div style="background:#111;color:#0f0;text-align:center;padding:4px;font-size:10px;font-family:monospace;">SYNCED FROM GITHUB &mdash; v2</div>
+  <table class="header-table"><tr>
+    <td style="width:60%;">
+      <div class="shop-name">{{ shop_name }}</div>
+      <div class="shop-contact">{{ shop_contact }}</div>
+    </td>
+    <td class="invoice-tag" style="width:40%;">
+      <div class="big">INVOICE</div>
+      <div class="num">#{{ invoice_number }}</div>
+    </td>
+  </tr></table>
+
+  <table class="meta-table"><tr>
+    <td style="width:50%;">
+      <div class="meta-label">Billed to</div>
+      <div class="meta-value">{{ client_name }}</div>
+    </td>
+    <td style="width:50%;">
+      <div class="meta-label">Date</div>
+      <div class="meta-value">{{ today }}</div>
+    </td>
+  </tr></table>
+
+  <table class="items-table">
+    <tr><th>Description</th><th>Qty</th><th>Unit Price</th><th>Amount</th></tr>
+    {% for item in items %}
+    <tr>
+      <td>{{ item.description }}</td>
+      <td>{{ item.qty }}</td>
+      <td>{{ currency }} {{ "%.2f"|format(item.unit_price|float) }}</td>
+      <td>{{ currency }} {{ "%.2f"|format(item.qty|float * item.unit_price|float) }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <table class="totals-table">
+    <tr><td>Subtotal</td><td style="text-align:right;">{{ currency }} {{ "%.2f"|format(subtotal) }}</td></tr>
+    {% if tax_percent and tax_percent|float > 0 %}
+    <tr><td>Tax ({{ tax_percent }}%)</td><td style="text-align:right;">{{ currency }} {{ "%.2f"|format(tax_amount) }}</td></tr>
+    {% endif %}
+    <tr><td class="grand-label">Total</td><td class="grand-value" style="text-align:right;">{{ currency }} {{ "%.2f"|format(total) }}</td></tr>
+  </table>
+
+  {% if notes %}<div class="notes">{{ notes }}</div>{% endif %}
+  <div class="footer">Thank you for your business.</div>
+</body>
+</html>
