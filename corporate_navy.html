@@ -3,25 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <style>
-  @page { size: A4; margin: 22mm 18mm; }
-  body { font-family: Helvetica, Arial, sans-serif; color: #1a1d24; font-size: 13px; }
-  .header-table { width: 100%; border-bottom: 3px solid #2f6f4f; padding-bottom: 14px; margin-bottom: 22px; }
-  .shop-name { font-size: 22px; font-weight: bold; color: #2f6f4f; }
-  .shop-contact { color: #555555; font-size: 12px; margin-top: 4px; }
+  @page { size: A4; margin: 20mm; }
+  body { font-family: Helvetica, Arial, sans-serif; color: #1a1f2e; font-size: 13px; }
+  .header-table { width: 100%; margin-bottom: 20px; }
+  .shop-name { font-size: 21px; font-weight: bold; color: #142850; }
+  .shop-contact { color: #5a6478; font-size: 12px; margin-top: 4px; }
   .invoice-tag { text-align: right; }
-  .invoice-tag .big { font-size: 26px; letter-spacing: 2px; color: #1a1d24; font-weight: bold; }
-  .invoice-tag .num { color: #2f6f4f; font-weight: bold; margin-top: 4px; }
+  .invoice-tag .badge { display: inline; background: #142850; color: #ffffff; padding: 6px 14px; font-size: 13px; font-weight: bold; letter-spacing: 1px; }
+  .invoice-tag .num { color: #142850; font-weight: bold; margin-top: 6px; font-size: 13px; }
+  .divider { border-top: 1px solid #d5d9e2; margin: 18px 0 20px 0; }
   .meta-table { width: 100%; margin-bottom: 22px; }
-  .meta-label { font-size: 11px; text-transform: uppercase; color: #888888; }
-  .meta-value { font-size: 14px; font-weight: bold; }
+  .meta-label { font-size: 10px; text-transform: uppercase; color: #8a92a6; }
+  .meta-value { font-size: 14px; font-weight: bold; color: #1a1f2e; }
   .items-table { width: 100%; border-collapse: collapse; margin-bottom: 22px; }
-  .items-table th { background: #2f6f4f; color: #ffffff; text-align: left; padding: 8px 10px; font-size: 11px; text-transform: uppercase; }
-  .items-table td { padding: 8px 10px; border-bottom: 1px solid #eeeeee; }
+  .items-table th { background: #eef1f7; color: #142850; text-align: left; padding: 8px 10px; font-size: 11px; text-transform: uppercase; border-bottom: 2px solid #142850; }
+  .items-table td { padding: 9px 10px; border-bottom: 1px solid #eef1f7; }
   .totals-table { width: 260px; margin-left: auto; }
   .totals-table td { padding: 5px 0; }
-  .totals-table .grand-label, .totals-table .grand-value { font-weight: bold; font-size: 15px; border-top: 2px solid #2f6f4f; padding-top: 8px; color: #2f6f4f; }
-  .notes { margin-top: 26px; font-size: 12px; color: #666666; border-top: 1px solid #eeeeee; padding-top: 12px; }
-  .footer { text-align: center; margin-top: 34px; color: #aaaaaa; font-size: 11px; }
+  .totals-table .grand-label, .totals-table .grand-value { font-weight: bold; font-size: 16px; border-top: 2px solid #142850; padding-top: 8px; color: #142850; }
+  .notes { margin-top: 26px; font-size: 12px; color: #5a6478; }
+  .footer { text-align: center; margin-top: 34px; color: #b0b8c8; font-size: 11px; }
 </style>
 </head>
 <body>
@@ -31,20 +32,15 @@
       <div class="shop-contact">{{ shop_contact }}</div>
     </td>
     <td class="invoice-tag" style="width:40%;">
-      <div class="big">INVOICE</div>
+      <span class="badge">INVOICE</span>
       <div class="num">#{{ invoice_number }}</div>
     </td>
   </tr></table>
+  <div class="divider"></div>
 
   <table class="meta-table"><tr>
-    <td style="width:50%;">
-      <div class="meta-label">Billed to</div>
-      <div class="meta-value">{{ client_name }}</div>
-    </td>
-    <td style="width:50%;">
-      <div class="meta-label">Date</div>
-      <div class="meta-value">{{ today }}</div>
-    </td>
+    <td style="width:50%;"><div class="meta-label">Billed to</div><div class="meta-value">{{ client_name }}</div></td>
+    <td style="width:50%;"><div class="meta-label">Date</div><div class="meta-value">{{ today }}</div></td>
   </tr></table>
 
   <table class="items-table">
